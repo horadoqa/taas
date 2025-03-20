@@ -1,0 +1,19 @@
+---
+- name: Provisiona o ambiente para o K6
+  include_tasks: create_machines.yaml
+  when: k6_create_machines is defined
+- name: Configura o K6 nos geradores de carga
+  include_tasks: configure_k6.yaml
+  when: k6_configure_machines is defined
+- name: Configura os testes do K6
+  include_tasks: configure_k6_tests.yaml
+  when: k6_configure_tests is defined
+- name: Run K6 Test
+  include_tasks: run_k6_tests.yaml
+  when: k6_run_tests is defined
+- name: Remove o ambiente para o K6
+  include_tasks: destroy_machines.yaml
+  when: k6_destroy_machines is defined
+- name: Configura K6 Extensions
+  include_tasks: configure_k6_extensions.yaml
+  when: k6_configure_extensions is defined

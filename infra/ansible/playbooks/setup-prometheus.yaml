@@ -1,0 +1,22 @@
+- hosts: prometheus_instances
+  vars:
+    prometheus_version: prometheus-2.33.1.linux-amd64
+    prometheus_path: /opt/prometheus/
+    grafana_version: grafana-8.3.5-1.x86_64.rpm 
+  roles:
+    - role: prometheus
+      tags: prometheus
+  tags: k6
+- hosts: k6_instances
+  gather_facts: no
+  tasks:
+  - name: Coleta o ip do Prometheus
+    shell: ansible-inventory --graph -i inventory/gcp.yaml  | grep -wns prometheus_instances -C 1 | tail -n 1 | awk -F'[--]' '{print $4}'
+    register: ip_prometheus
+    delegate_to: 127.0.0.1
+    become: false
+    when: k6_instances_cloud_provider == "gcp"
+  - name: Configura o /etc/hosts
+    shell: echo "{{ ip_prometheus.stdout }} prometheus" >> /etc/hosts
+    when: k6_instances_cloud_provider == "gcp"
+  

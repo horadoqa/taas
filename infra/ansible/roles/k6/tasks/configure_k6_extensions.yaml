@@ -1,0 +1,16 @@
+- name: Cria os diretorios locais
+  file:
+    path: '{{ k6_dest_dir_extensions }}/{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+   - "{{ k6_repo_extensions }}"
+- name: Baixa o k6-extensions
+  git:
+    repo: 'gitlab@gitlab.globoi.com:devops/taas-k6-extensions/{{ item }}.git'
+    dest: '{{ k6_dest_dir_extensions }}/{{ item }}'
+    single_branch: yes
+    version: main
+    force: yes
+  with_items:
+   - "{{ k6_repo_extensions }}"

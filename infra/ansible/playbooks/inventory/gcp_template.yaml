@@ -1,0 +1,19 @@
+plugin: gcp_compute
+projects:
+  - ###PROJECT_ID###
+auth_kind: serviceaccount
+scopes:
+ - 'https://www.googleapis.com/auth/cloud-platform'
+ - 'https://www.googleapis.com/auth/compute.readonly'
+keyed_groups:
+  - key: labels
+    prefix: label
+  - key: zone
+    prefix: zone
+groups:
+  k6_instances: "'gce-k6' in name"
+  prometheus_instances: "'gce-prometheus' in name"
+hostnames:
+  - private_ip
+compose:
+  ansible_host: networkInterfaces[0].networkIP

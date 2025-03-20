@@ -1,0 +1,51 @@
+---
+- hosts: 127.0.0.1
+  gather_facts: no
+  become: false
+  connection: local 
+  vars:
+    k6_configure_extensions: true
+    k6_clone_repo_extensions: true
+    k6_git_repo_extensions: gitlab@gitlab.globoi.com:devops/taas-k6-extensions
+    k6_dest_dir_extensions: /tmp/k6-extensions
+    k6_repo_extensions:
+    - "xk6-ldap"
+    - "xk6-dns"
+  roles:
+    - role: k6
+      tags: k6_download_extensions
+  tags: k6
+- hosts: k6_instances
+  vars:
+    k6_configure_machines: true
+    go_lang_version: go1.18.2.linux-amd64.tar.gz
+    k6_results_dir: /tmp/k6_results
+    k6_dest_dir_extensions: /tmp/k6-extensions
+    k6_repo_extensions:
+    - "xk6-ldap={{ k6_dest_dir_extensions }}/xk6-ldap/"
+    - "xk6-dns={{ k6_dest_dir_extensions }}/xk6-dns/"
+  roles:
+    - role: k6
+      tags: k6_configure_machines
+  tags: k6
+- hosts: 127.0.0.1
+  gather_facts: no
+  become: false
+  connection: local 
+  vars:
+    k6_configure_tests: true
+    k6_clone_repo: true
+    k6_dest_dir: /tmp/k6-performance-tests/
+  roles:
+    - role: k6
+      tags: k6_configure_machines
+  tags: k6
+- hosts: k6_instances
+  vars:
+    k6_configure_tests: true
+    k6_clone_repo: false
+    k6_dest_dir: /tmp/k6-performance-tests/
+  roles:
+    - role: k6
+      tags: k6_configure_tests
+  tags: k6

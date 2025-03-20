@@ -1,0 +1,21 @@
+- name: Baixa os scripts para o teste de carga
+  git:
+    repo: "{{ k6_repo_tests }}"
+    dest: "{{ k6_dest_dir }}"
+    single_branch: yes
+    version: "{{ k6_repo_branch }}"
+    force: yes
+  when: k6_clone_repo
+- name: Cria o diretorio de dos testes
+  file:
+    path: "{{ k6_dest_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: not k6_clone_repo
+- name: Copia os testes para os servidores do K6
+  synchronize:
+   src: "{{ k6_dest_dir }}/{{ k6_tests_path }}/"
+   dest: "{{ k6_dest_dir }}"
+  when: not k6_clone_repo

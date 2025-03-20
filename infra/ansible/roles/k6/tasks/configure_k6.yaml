@@ -1,0 +1,92 @@
+---
+- name: Aguarda o template iniciar
+  pause:
+    seconds: 20
+- name: Instala os pacotes de debug via apt
+  when:  k6_instances_cloud_provider == "aws"
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - telnet
+    - vim
+    - rsync
+    - screen
+- name: Instala os pacotes de debug via yum
+  when:  k6_instances_cloud_provider == "gcp"
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - telnet
+    - vim
+    - rsync
+    - screen
+- name: Baixa o golang
+  when:  k6_instances_cloud_provider == "aws"
+  get_url:
+    url: "https://storage.googleapis.com/golang/{{ go_lang_version }}"
+    dest: /tmp/
+    owner: root
+    group: root
+    mode: '0644'
+- name: Baixa o golang via Artifactory
+  when:  k6_instances_cloud_provider == "gcp"
+  get_url:
+    url: "https://artifactory.globoi.com/artifactory/libs-release-local/com/globo/globoid/golang/{{ go_lang_version }}"
+    dest: /tmp/
+    owner: root
+    group: root
+    mode: '0644'
+- name: Descompacta a instalacao do golang
+  unarchive:
+    src: /tmp/{{ go_lang_version }}
+    remote_src: yes
+    dest: /usr/local/
+    owner: root
+    group: root
+- name: Configura o golang no path
+  template:
+    src: templates/etc/profile.d/golang.sh.j2
+    dest: /etc/profile.d/golang.sh
+    owner: root
+    group: root
+    mode: '0644'
+- name: Configura os parâmetros do Kernel
+  template:
+    src: templates/etc/sysctl.conf.j2
+    dest: /etc/sysctl.conf
+    owner: root
+    group: root
+    mode: '0644'
+  register: tuning_sysctl
+- name: Reload Sysctl
+  command: sysctl -p 
+  when: tuning_sysctl.changed
+- name: Cria o diretorio para armazenar os resultados
+  file:
+    path: "{{ k6_results_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+- name: Copia o k6-extensions para os servidores do K6
+  synchronize:
+   src: "{{ k6_dest_dir_extensions }}"
+   dest: /tmp
+- name: Concatena uma lista de extensoes para string
+  set_fact:
+    k6_extensions: "--with {{ k6_repo_extensions | join(' --with ') }}"
+- name: Instala o XK6 via Proxy
+  when:  k6_instances_cloud_provider == "gcp"
+  shell: export HTTPS_PROXY="{{ k6_proxy }}" && export NO_PROXY="localhost,127.0.0.1,10.,.globoi.com,i.s3.glbimg.com,.googleapis.com,.apps.g.globo,.apps.tsuru.dev.gcp.i.globo,.globo.com" && source /etc/profile.d/golang.sh && go install go.k6.io/xk6/cmd/xk6@latest
+- name: Compila o K6 via Proxy
+  when:  k6_instances_cloud_provider == "gcp"
+  shell: export HTTPS_PROXY="{{ k6_proxy }}" && export NO_PROXY="localhost,127.0.0.1,10.,.globoi.com,i.s3.glbimg.com,.googleapis.com,.apps.g.globo,.apps.tsuru.dev.gcp.i.globo,.globo.com" && source /etc/profile.d/golang.sh 
+  # && /root/go/bin/xk6 build --output /usr/local/sbin/k6 --with github.com/grafana/xk6-output-prometheus-remote@latest {{ k6_extensions }}
+- name: Instala o XK6
+  when:  k6_instances_cloud_provider == "aws"
+  shell: . /etc/profile.d/golang.sh && go install go.k6.io/xk6/cmd/xk6@latest
+- name: Compila o K6
+  when:  k6_instances_cloud_provider == "aws"
+  shell: . /etc/profile.d/golang.sh && /root/go/bin/xk6 build --output /usr/local/sbin/k6 --with github.com/grafana/xk6-output-prometheus-remote

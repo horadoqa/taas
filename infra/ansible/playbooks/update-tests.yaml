@@ -1,0 +1,22 @@
+---
+- hosts: 127.0.0.1
+  gather_facts: false
+  become: false
+  connection: local 
+  vars:
+    k6_configure_tests: true
+    k6_clone_repo: true
+    k6_dest_dir: /tmp/k6-performance-tests/
+  roles:
+    - role: k6
+      tags: k6_configure_machines
+  tags: k6
+- hosts: k6_instances
+  vars:
+    k6_configure_tests: true
+    k6_clone_repo: false
+    k6_dest_dir: /tmp/k6-performance-tests/
+  roles:
+    - role: k6
+      tags: k6_configure_tests
+  tags: k6

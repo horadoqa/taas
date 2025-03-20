@@ -1,0 +1,17 @@
+---
+- name: Executa o terraform init K6
+  when:  k6_instances_cloud_provider == "aws"
+  become: false
+  shell: 'cd ../../terraform/aws/{{ lookup("env", "PROJECT_ID") }} && terraform init'
+  delegate_to: 127.0.0.1
+- name: Executa o terraform apply K6
+  when:  k6_instances_cloud_provider == "aws"
+  become: false
+  shell: 'cd ../../terraform/aws/{{ lookup("env", "PROJECT_ID") }} && terraform apply --auto-approve'
+  delegate_to: 127.0.0.1
+- name: Executa o terraform init K6
+  shell: 'cd ../../terraform/gcp/{{ lookup("env", "PROJECT_ID") }} && terraform init'
+  when:  k6_instances_cloud_provider == "gcp"
+- name: Executa o terraform apply K6
+  shell: 'cd ../../terraform/gcp/{{ lookup("env", "PROJECT_ID") }} && terraform apply --auto-approve'
+  when:  k6_instances_cloud_provider == "gcp"

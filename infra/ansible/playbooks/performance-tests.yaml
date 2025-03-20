@@ -1,0 +1,11 @@
+---
+- hosts: k6_instances
+  vars:
+    k6_execution_test_list: "{{ k6_execution_tests.split(',') }}"
+    k6_run_tests: true
+    k6_dest_dir: /tmp/k6-performance-tests/
+    k6_results_dir: /tmp/k6_results
+  roles:
+    - role: k6
+      tags: k6_run_tests
+  tags: k6

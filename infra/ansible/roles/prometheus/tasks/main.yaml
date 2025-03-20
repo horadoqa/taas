@@ -1,0 +1,125 @@
+---
+- name: Cria o Grupo Prometheus
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+   - prometheus
+- name: Cria o usuario Prometheus e adiciona no grupo Prometheus
+  user:
+    name: "{{ item }}"
+    comment: Prometheus User
+    group: "{{ item }}"
+  with_items: 
+   - prometheus
+- name: Coleta o estado no arquivo do Prometheus
+  stat:
+    path: /tmp/{{ prometheus_version }}
+  register: prometheus
+- name: Baixa o arquivo da versao do Prometheus
+  get_url:
+   url: "https://artifactory.globoi.com/artifactory/libs-release-local/com/globo/globoid/prometheus/{{ prometheus_version }}.tar.gz"
+   dest: /tmp/
+   owner: root
+   group: root
+   mode: '0644'
+  when: not prometheus.stat.exists
+- name: Cria os diretorio do Prometheus
+  file:
+    path: "{{ prometheus_path }}"
+    mode: '0755'
+    owner: root
+    group: root
+    state: directory
+  with_items:
+   - "{{ prometheus_path }}"
+   - /etc/prometheus
+   - /etc/prometheus/console_libraries
+   - /etc/prometheus/consoles
+- name: Cria o diretorio do banco de dados do Prometheus
+  file:
+    path: /var/lib/prometheus
+    mode: '0755'
+    owner: prometheus
+    group: prometheus
+    state: directory
+- name: Descompacta a instalacao do Prometheus
+  unarchive:
+    src: "/tmp/{{ prometheus_version }}.tar.gz"
+    dest: /tmp/
+    remote_src: yes
+    owner: root
+    group: root
+- name: Copia os binarios do Prometheus
+  copy:
+   src: "{{ item }}"
+   dest: "{{ prometheus_path }}"
+   remote_src: yes
+   owner: root
+   group: root
+   mode: '0755'
+  with_items:
+   - "/tmp/{{ prometheus_version }}/prometheus"
+   - "/tmp/{{ prometheus_version }}/promtool"
+- name: Copia o Consoles
+  copy:
+   src: "/tmp/{{ prometheus_version }}/consoles/"
+   dest: /etc/prometheus/consoles/
+   remote_src: yes
+   owner: root
+   group: root
+   mode: '0755'
+- name: Copia o Console Libraries
+  copy:
+   src: "/tmp/{{ prometheus_version }}/console_libraries/"
+   dest: /etc/prometheus/console_libraries/
+   remote_src: yes
+   owner: root
+   group: root
+   mode: '0755'
+- name: Arquivo de configuracao de inicializacao do Prometheus
+  template:
+   dest: /etc/systemd/system/prometheus.service
+   src: templates/etc/systemd/system/prometheus.service.j2
+   owner: root
+   group: root
+   mode: '0644'
+- name: Arquivo de configuracao do Prometheus
+  template:
+   dest: /etc/prometheus/prometheus.yml
+   src: templates/etc/prometheus/prometheus.yml.j2
+   owner: root
+   group: root
+   mode: '0644'
+- name: Executa o reload no systemd
+  systemd:
+    daemon_reexec: yes
+- name: Ativa o serviço do Prometheus
+  service:
+    name: prometheus
+    enabled: yes
+- name: Inicia o serviço do Prometheus
+  service:
+    name: prometheus
+    state: started
+- name: Realiza a instalacao do Grafana
+  yum:
+    name: https://artifactory.globoi.com/artifactory/libs-release-local/com/globo/globoid/grafana/{{ grafana_version }}
+- name: Copia a base do Grafana
+  copy:
+   src: files/var/lib/grafana/grafana.db
+   dest: /var/lib/grafana/
+   owner: grafana
+   group: grafana
+   mode: '0640'
+- name: Executa o reload no systemd
+  systemd:
+    daemon_reexec: yes
+- name: Ativa o serviço do Grafana
+  service:
+    name: grafana-server
+    enabled: yes
+- name: Inicia o serviço do Grafana
+  service:
+    name: grafana-server
+    state: started  

@@ -1,0 +1,1410 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "k6.io load tests results",
+    "editable": true,
+    "gnetId": 13861,
+    "graphTooltip": 0,
+    "id": 3295,
+    "iteration": 1645104602078,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "panels": [],
+        "title": "Global metrics",
+        "type": "row"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 0,
+          "y": 1
+        },
+        "id": 6,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "sum(rate(k6_iterations[$__rate_interval]))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{scenario}}",
+            "queryType": "randomWalk",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Iterations per second",
+        "transformations": [],
+        "type": "stat"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "VUs"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 4,
+          "y": 1
+        },
+        "id": 4,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "expr": "k6_vus",
+            "interval": "",
+            "legendFormat": "",
+            "queryType": "randomWalk",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Virtual Users",
+        "type": "stat"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 8,
+          "y": 1
+        },
+        "id": 8,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "expr": "sum(rate(k6_data_received[$__rate_interval]))",
+            "interval": "",
+            "legendFormat": "Received",
+            "queryType": "randomWalk",
+            "refId": "A"
+          },
+          {
+            "expr": "sum(rate(k6_data_sent[$__rate_interval]))",
+            "interval": "",
+            "legendFormat": "Sent",
+            "refId": "B"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Throughput",
+        "type": "stat"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 8,
+          "x": 16,
+          "y": 1
+        },
+        "id": 33,
+        "options": {
+          "frameIndex": 1,
+          "showHeader": true,
+          "sortBy": [
+            {
+              "desc": false,
+              "displayName": "Field"
+            }
+          ]
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "count by (url) (k6_http_reqs{scenario=\"$scenario\",method=~\"$method\"})",
+            "interval": "",
+            "legendFormat": "{{ url }}",
+            "refId": "A"
+          }
+        ],
+        "title": "Requests by URL",
+        "transformations": [
+          {
+            "id": "reduce",
+            "options": {
+              "labelsToFields": false,
+              "reducers": [
+                "count"
+              ]
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "Count": "Requests",
+                "Field": "URL"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "decimals": 0,
+            "mappings": [],
+            "noValue": "0",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 0.01
+                }
+              ]
+            },
+            "unit": "percentunit"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 8,
+          "y": 7
+        },
+        "id": 2,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "expr": "sum(rate(k6_check{outcome=\"fail\"}[$__rate_interval])) / sum(rate(k6_check[$__rate_interval]))",
+            "interval": "",
+            "legendFormat": "",
+            "queryType": "randomWalk",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "% Failed Checks",
+        "transformations": [],
+        "type": "stat"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 1
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 4,
+          "x": 12,
+          "y": 7
+        },
+        "id": 12,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "text": {},
+          "textMode": "auto"
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "expr": "sum(rate(k6_script_errors[$__rate_interval]))",
+            "interval": "",
+            "legendFormat": "Script errors",
+            "queryType": "randomWalk",
+            "refId": "A"
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Errors",
+        "type": "stat"
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 13
+        },
+        "id": 14,
+        "panels": [],
+        "repeat": "K6RequestName",
+        "title": "K6 HTTP Request: ${url}",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "reqps"
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 14
+        },
+        "hiddenSeries": false,
+        "id": 37,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.4",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "sum(rate(k6_http_reqs{url=~\"$url\"}[$__rate_interval])) by(status, url)",
+            "interval": "",
+            "legendFormat": "{{url}} - {{status}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Throughput",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:449",
+            "format": "reqps",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:450",
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "dark-green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Failed responses"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 12,
+          "y": 14
+        },
+        "id": 31,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "text": {}
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "avg(k6_http_req_duration_p95{url=~\"$url\",expected_response=\"true\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Successful responses",
+            "queryType": "randomWalk",
+            "refId": "A"
+          },
+          {
+            "exemplar": true,
+            "expr": "avg(k6_http_req_duration_p95{url=~\"$url\",expected_response=\"false\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Failed responses",
+            "queryType": "randomWalk",
+            "refId": "B"
+          }
+        ],
+        "title": "Response time (95th)",
+        "type": "gauge"
+      },
+      {
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "dark-green",
+              "mode": "fixed"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Failed responses"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-red",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 6,
+          "x": 18,
+          "y": 14
+        },
+        "id": 29,
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "text": {}
+        },
+        "pluginVersion": "7.5.4",
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "avg(k6_http_req_duration_avg{url=~\"$url\",expected_response=\"true\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Successful responses",
+            "queryType": "randomWalk",
+            "refId": "A"
+          },
+          {
+            "exemplar": true,
+            "expr": "avg(k6_http_req_duration_avg{url=~\"$url\",expected_response=\"false\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Failed responses",
+            "queryType": "randomWalk",
+            "refId": "B"
+          }
+        ],
+        "title": "Response time (avg)",
+        "type": "gauge"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 22
+        },
+        "hiddenSeries": false,
+        "id": 35,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.4",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "sum(rate(k6_http_req_blocked_avg{url=~\"$url\",scenario=\"$scenario\",method=~\"$method\"}[$__rate_interval]))",
+            "interval": "",
+            "legendFormat": "Blocked",
+            "refId": "A"
+          },
+          {
+            "exemplar": true,
+            "expr": "sum(k6_http_req_waiting_avg{url=~\"$url\",scenario=\"$scenario\",method=~\"$method\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Waiting",
+            "refId": "B"
+          },
+          {
+            "exemplar": true,
+            "expr": "sum(k6_http_req_ending_avg{url=~\"$url\",scenario=\"$scenario\",method=~\"$method\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Sending",
+            "refId": "C"
+          },
+          {
+            "exemplar": true,
+            "expr": "sum(k6_http_req_receiving_avg{url=~\"$url\",scenario=\"$scenario\",method=~\"$method\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "Receiving",
+            "refId": "D"
+          },
+          {
+            "exemplar": true,
+            "expr": "sum(k6_http_tls_handshaking_avg{url=~\"$url\",scenario=\"$scenario\",method=~\"$method\"})",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "TLS handshaking",
+            "refId": "E"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "HTTP breakdown",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "Prometheus:ProdutosPublishing",
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 22
+        },
+        "hiddenSeries": false,
+        "id": 38,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.5.4",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "exemplar": true,
+            "expr": "sum(k6_http_req_duration_avg{url=~\"$url\"}) by(status, url)",
+            "interval": "",
+            "legendFormat": "{{url}} - {{status}}",
+            "refId": "A"
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Latency",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:449",
+            "format": "ms",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:450",
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      }
+    ],
+    "refresh": "5s",
+    "schemaVersion": 27,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": "http.*",
+          "current": {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Prometheus:ProdutosPublishing",
+          "definition": "label_values(url)",
+          "description": null,
+          "error": null,
+          "hide": 0,
+          "includeAll": true,
+          "label": "url",
+          "multi": false,
+          "name": "url",
+          "options": [],
+          "query": {
+            "query": "label_values(url)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "cartola-qa3",
+            "value": "cartola-qa3"
+          },
+          "datasource": "Prometheus:ProdutosPublishing",
+          "definition": "label_values(scenario)",
+          "description": null,
+          "error": null,
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "scenario",
+          "options": [],
+          "query": {
+            "query": "label_values(scenario)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          "datasource": "Prometheus:ProdutosPublishing",
+          "definition": "label_values(method)",
+          "description": null,
+          "error": null,
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": false,
+          "name": "method",
+          "options": [
+            {
+              "selected": true,
+              "text": "All",
+              "value": "$__all"
+            },
+            {
+              "selected": false,
+              "text": "Access",
+              "value": "Access"
+            },
+            {
+              "selected": false,
+              "text": "Allocate",
+              "value": "Allocate"
+            },
+            {
+              "selected": false,
+              "text": "BindConnToSession",
+              "value": "BindConnToSession"
+            },
+            {
+              "selected": false,
+              "text": "Clone",
+              "value": "Clone"
+            },
+            {
+              "selected": false,
+              "text": "Close",
+              "value": "Close"
+            },
+            {
+              "selected": false,
+              "text": "Commit",
+              "value": "Commit"
+            },
+            {
+              "selected": false,
+              "text": "Create",
+              "value": "Create"
+            },
+            {
+              "selected": false,
+              "text": "CreateSession",
+              "value": "CreateSession"
+            },
+            {
+              "selected": false,
+              "text": "DELETE",
+              "value": "DELETE"
+            },
+            {
+              "selected": false,
+              "text": "DeAllocate",
+              "value": "DeAllocate"
+            },
+            {
+              "selected": false,
+              "text": "DelegReturn",
+              "value": "DelegReturn"
+            },
+            {
+              "selected": false,
+              "text": "DestroyClientID",
+              "value": "DestroyClientID"
+            },
+            {
+              "selected": false,
+              "text": "DestroySession",
+              "value": "DestroySession"
+            },
+            {
+              "selected": false,
+              "text": "ExchangeID",
+              "value": "ExchangeID"
+            },
+            {
+              "selected": false,
+              "text": "FreeStateID",
+              "value": "FreeStateID"
+            },
+            {
+              "selected": false,
+              "text": "FsInfo",
+              "value": "FsInfo"
+            },
+            {
+              "selected": false,
+              "text": "FsLocations",
+              "value": "FsLocations"
+            },
+            {
+              "selected": false,
+              "text": "FsStat",
+              "value": "FsStat"
+            },
+            {
+              "selected": false,
+              "text": "FsidPresent",
+              "value": "FsidPresent"
+            },
+            {
+              "selected": false,
+              "text": "GET",
+              "value": "GET"
+            },
+            {
+              "selected": false,
+              "text": "GetACL",
+              "value": "GetACL"
+            },
+            {
+              "selected": false,
+              "text": "GetAttr",
+              "value": "GetAttr"
+            },
+            {
+              "selected": false,
+              "text": "GetDeviceInfo",
+              "value": "GetDeviceInfo"
+            },
+            {
+              "selected": false,
+              "text": "GetDeviceList",
+              "value": "GetDeviceList"
+            },
+            {
+              "selected": false,
+              "text": "GetLeaseTime",
+              "value": "GetLeaseTime"
+            },
+            {
+              "selected": false,
+              "text": "Getattr",
+              "value": "Getattr"
+            },
+            {
+              "selected": false,
+              "text": "LayoutCommit",
+              "value": "LayoutCommit"
+            },
+            {
+              "selected": false,
+              "text": "LayoutGet",
+              "value": "LayoutGet"
+            },
+            {
+              "selected": false,
+              "text": "LayoutReturn",
+              "value": "LayoutReturn"
+            },
+            {
+              "selected": false,
+              "text": "LayoutStats",
+              "value": "LayoutStats"
+            },
+            {
+              "selected": false,
+              "text": "Link",
+              "value": "Link"
+            },
+            {
+              "selected": false,
+              "text": "Lock",
+              "value": "Lock"
+            },
+            {
+              "selected": false,
+              "text": "Lockt",
+              "value": "Lockt"
+            },
+            {
+              "selected": false,
+              "text": "Locku",
+              "value": "Locku"
+            },
+            {
+              "selected": false,
+              "text": "Lookup",
+              "value": "Lookup"
+            },
+            {
+              "selected": false,
+              "text": "LookupRoot",
+              "value": "LookupRoot"
+            },
+            {
+              "selected": false,
+              "text": "MkDir",
+              "value": "MkDir"
+            },
+            {
+              "selected": false,
+              "text": "MkNod",
+              "value": "MkNod"
+            },
+            {
+              "selected": false,
+              "text": "Null",
+              "value": "Null"
+            },
+            {
+              "selected": false,
+              "text": "Open",
+              "value": "Open"
+            },
+            {
+              "selected": false,
+              "text": "OpenConfirm",
+              "value": "OpenConfirm"
+            },
+            {
+              "selected": false,
+              "text": "OpenDowngrade",
+              "value": "OpenDowngrade"
+            },
+            {
+              "selected": false,
+              "text": "OpenNoattr",
+              "value": "OpenNoattr"
+            },
+            {
+              "selected": false,
+              "text": "POST",
+              "value": "POST"
+            },
+            {
+              "selected": false,
+              "text": "PUT",
+              "value": "PUT"
+            },
+            {
+              "selected": false,
+              "text": "PathConf",
+              "value": "PathConf"
+            },
+            {
+              "selected": false,
+              "text": "Pathconf",
+              "value": "Pathconf"
+            },
+            {
+              "selected": false,
+              "text": "Read",
+              "value": "Read"
+            },
+            {
+              "selected": false,
+              "text": "ReadDir",
+              "value": "ReadDir"
+            },
+            {
+              "selected": false,
+              "text": "ReadDirPlus",
+              "value": "ReadDirPlus"
+            },
+            {
+              "selected": false,
+              "text": "ReadLink",
+              "value": "ReadLink"
+            },
+            {
+              "selected": false,
+              "text": "ReclaimComplete",
+              "value": "ReclaimComplete"
+            },
+            {
+              "selected": false,
+              "text": "ReleaseLockowner",
+              "value": "ReleaseLockowner"
+            },
+            {
+              "selected": false,
+              "text": "Remove",
+              "value": "Remove"
+            },
+            {
+              "selected": false,
+              "text": "Rename",
+              "value": "Rename"
+            },
+            {
+              "selected": false,
+              "text": "Renew",
+              "value": "Renew"
+            },
+            {
+              "selected": false,
+              "text": "RmDir",
+              "value": "RmDir"
+            },
+            {
+              "selected": false,
+              "text": "Root",
+              "value": "Root"
+            },
+            {
+              "selected": false,
+              "text": "Secinfo",
+              "value": "Secinfo"
+            },
+            {
+              "selected": false,
+              "text": "SecinfoNoName",
+              "value": "SecinfoNoName"
+            },
+            {
+              "selected": false,
+              "text": "Seek",
+              "value": "Seek"
+            },
+            {
+              "selected": false,
+              "text": "Sequence",
+              "value": "Sequence"
+            },
+            {
+              "selected": false,
+              "text": "ServerCaps",
+              "value": "ServerCaps"
+            },
+            {
+              "selected": false,
+              "text": "SetACL",
+              "value": "SetACL"
+            },
+            {
+              "selected": false,
+              "text": "SetAttr",
+              "value": "SetAttr"
+            },
+            {
+              "selected": false,
+              "text": "SetClientID",
+              "value": "SetClientID"
+            },
+            {
+              "selected": false,
+              "text": "SetClientIDConfirm",
+              "value": "SetClientIDConfirm"
+            },
+            {
+              "selected": false,
+              "text": "Setattr",
+              "value": "Setattr"
+            },
+            {
+              "selected": false,
+              "text": "StatFs",
+              "value": "StatFs"
+            },
+            {
+              "selected": false,
+              "text": "SymLink",
+              "value": "SymLink"
+            },
+            {
+              "selected": false,
+              "text": "Symlink",
+              "value": "Symlink"
+            },
+            {
+              "selected": false,
+              "text": "TestStateID",
+              "value": "TestStateID"
+            },
+            {
+              "selected": false,
+              "text": "WrCache",
+              "value": "WrCache"
+            },
+            {
+              "selected": false,
+              "text": "Write",
+              "value": "Write"
+            }
+          ],
+          "query": {
+            "query": "label_values(method)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 0,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-30m",
+      "to": "now"
+    },
+    "timepicker": {
+      "nowDelay": "",
+      "refresh_intervals": [
+        "1s",
+        "5s",
+        "10s",
+        "30s"
+      ]
+    },
+    "timezone": "",
+    "title": "K6 Load Testing Results",
+    "uid": "zDpLnqaMz",
+    "version": 12
+  }

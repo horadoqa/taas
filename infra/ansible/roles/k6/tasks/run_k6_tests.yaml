@@ -1,0 +1,23 @@
+- name: Executa a bateria de testes com K6
+  shell: 'export HTTPS_PROXY="{{ k6_proxy }}" && export NO_PROXY="localhost,127.0.0.1,10.,.globoi.com,i.s3.glbimg.com,.googleapis.com,.apps.g.globo,.apps.tsuru.dev.gcp.i.globo,.globo.com" && export K6_PROMETHEUS_REMOTE_URL=http://prometheus:9090/api/v1/write && /usr/local/sbin/k6 run -o output-prometheus-remote -u {{ k6_vus }} -d {{ k6_duration }} --summary-export {{ k6_results_dir }}/cenario_{{ my_idx }}.json {{ k6_dest_dir }}{{ item }}'
+  with_items:
+    - "{{ k6_execution_test_list }}"
+  loop_control:
+    index_var: my_idx
+  when: k6_script_config is not defined
+- name: Executa a bateria de testes com K6 com configuracoes de execucao no Script
+  shell: 'export HTTPS_PROXY="{{ k6_proxy }}" && export NO_PROXY="localhost,127.0.0.1,10.,.globoi.com,i.s3.glbimg.com,.googleapis.com,.apps.g.globo,.apps.tsuru.dev.gcp.i.globo,.globo.com" && export K6_PROMETHEUS_REMOTE_URL=http://prometheus:9090/api/v1/write && /usr/local/sbin/k6 run -o output-prometheus-remote --summary-export {{ k6_results_dir }}/cenario_{{ my_idx }}.json {{ k6_dest_dir }}{{ item }}'
+  with_items:
+    - "{{ k6_execution_test_list }}"
+  loop_control:
+    index_var: my_idx
+  when: k6_script_config is defined
+- name: Coleta do resultados do testes
+  fetch:
+    src: "{{ k6_results_dir }}/cenario_{{ my_idx }}.json"
+    dest: /tmp/k6-result-{{ inventory_hostname }}/{{ item }}
+    flat: yes
+  with_items:
+    - "{{ k6_execution_test_list }}"
+  loop_control:
+    index_var: my_idx

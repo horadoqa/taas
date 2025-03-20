@@ -1,0 +1,11 @@
+---
+- hosts: 127.0.0.1
+  gather_facts: no
+  connection: local
+  become: false
+  vars:
+    k6_create_machines: true
+  roles:
+   - role: k6
+     tags: create_machines
+  tags: k6
