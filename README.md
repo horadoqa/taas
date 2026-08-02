@@ -1,17 +1,17 @@
 # taas - Test As A Service
 
-### Documentação: Test as a Service (TaaS)
+## Documentação: Test as a Service (TaaS)
 
 **Objetivo:**  
 Esta documentação tem como objetivo fornecer uma explicação detalhada sobre o serviço Test as a Service (TaaS), abordando suas funcionalidades, benefícios, arquitetura, como usar e exemplos práticos.
 
 ---
 
-### 1. Introdução
+## 1. Introdução
 
 **Test as a Service (TaaS)** é uma solução baseada em nuvem que oferece serviços de teste de software de forma escalável, ágil e automatizada. Em vez de configurar e manter infraestrutura e equipes dedicadas a testes internamente, as empresas podem acessar plataformas de teste de alta qualidade de maneira sob demanda. A proposta é permitir que as equipes de desenvolvimento se concentrem no código e nos recursos de suas aplicações, enquanto o TaaS cuida da execução dos testes.
 
-### 2. Benefícios do TaaS
+## 2. Benefícios do TaaS
 
 - **Escalabilidade:** Capacidade de escalar os testes para diferentes tipos de aplicações e diferentes níveis de complexidade.
 - **Automação:** Testes automatizados, integrados em pipelines de CI/CD, com facilidade para configurar e rodar em diversos ambientes.
@@ -19,7 +19,7 @@ Esta documentação tem como objetivo fornecer uma explicação detalhada sobre 
 - **Cobertura Abrangente:** Acesso a uma variedade de tipos de testes (unitários, integração, desempenho, segurança, usabilidade) para garantir a qualidade do software.
 - **Acessibilidade:** Plataforma baseada em nuvem, acessível de qualquer lugar e a qualquer momento.
 
-### 3. Tipos de Testes Oferecidos
+## 3. Tipos de Testes Oferecidos
 
 O TaaS pode ser configurado para realizar diversos tipos de testes, como:
 
@@ -35,7 +35,7 @@ O TaaS pode ser configurado para realizar diversos tipos de testes, como:
 
 - **Testes de Regresso:** Verificação de que as mudanças no código não introduzem falhas em funcionalidades previamente existentes.
 
-### 4. Arquitetura do TaaS
+## 4. Arquitetura do TaaS
 
 A arquitetura de um sistema TaaS envolve as seguintes camadas principais:
 
@@ -52,27 +52,27 @@ A arquitetura de um sistema TaaS envolve as seguintes camadas principais:
    - **Alertas:** Notificações e relatórios automáticos sobre falhas encontradas durante a execução dos testes.
    - **Integração com Ferramentas de DevOps:** Para reportar automaticamente falhas em pipelines de CI/CD.
 
-### 5. Como Usar o TaaS
+## 5. Como Usar o TaaS
 
-#### Passo 1: Criação de Conta
+### Passo 1: Criação de Conta
 - O primeiro passo é criar uma conta na plataforma TaaS. Isso pode ser feito por meio do portal web ou via API.
   
-#### Passo 2: Configuração de Projetos
+### Passo 2: Configuração de Projetos
 - Após criar a conta, o usuário configura um projeto de teste, especificando o tipo de aplicação, ambiente desejado e os tipos de testes que deseja executar.
 
 #### Passo 3: Definição de Testes
 - O usuário escolhe os tipos de testes a serem executados, como testes unitários, de integração, de desempenho, etc. A plataforma geralmente oferece integração com ferramentas populares de testes, como JUnit, Selenium, JMeter, entre outros.
 
-#### Passo 4: Execução dos Testes
+### Passo 4: Execução dos Testes
 - O sistema irá provisionar os recursos necessários para rodar os testes, seja na nuvem ou em um ambiente dedicado.
 
-#### Passo 5: Monitoramento e Relatórios
+### Passo 5: Monitoramento e Relatórios
 - Após a execução, o usuário pode visualizar os resultados diretamente no dashboard ou receber relatórios automatizados sobre o andamento e os resultados dos testes.
 
-#### Passo 6: Ação Corretiva
+### Passo 6: Ação Corretiva
 - Caso algum teste falhe, o TaaS fornecerá detalhes sobre o erro, permitindo que os desenvolvedores corrijam problemas rapidamente.
 
-### 6. Integrações
+## 6. Integrações
 
 O TaaS é altamente integrado com ferramentas populares do ecossistema DevOps e de desenvolvimento, tais como:
 
@@ -81,13 +81,13 @@ O TaaS é altamente integrado com ferramentas populares do ecossistema DevOps e 
 - **Ferramentas de Teste:** Selenium, JUnit, TestNG, JMeter, Postman.
 - **Ferramentas de Monitoramento e Log:** ELK Stack (Elasticsearch, Logstash, Kibana), Splunk.
 
-### 7. Casos de Uso
+## 7. Casos de Uso
 
 - **Empresas de Software:** Para validar novos lançamentos e atualizações sem a necessidade de configurar ambientes locais de teste.
 - **Equipes de DevOps:** Para integrar testes automatizados diretamente nos pipelines de CI/CD.
 - **Startups e PMEs:** Para testar software de forma ágil e econômica sem a necessidade de infraestrutura interna.
 
-### 8. Preços
+## 8. Preços
 
 Os preços do TaaS geralmente são baseados em fatores como:
 
@@ -96,16 +96,16 @@ Os preços do TaaS geralmente são baseados em fatores como:
 - **Recursos Utilizados:** Tamanho do ambiente de teste (ex: número de servidores virtuais necessários).
 - **Suporte e Consultoria:** Serviços adicionais, como suporte 24/7 e consultoria especializada.
 
-### 9. Exemplos Práticos
+## 9. Exemplos Práticos
 
-#### Exemplo 1: Teste de API
+### Exemplo 1: Teste de API
 
 - **Objetivo:** Validar que a API RESTful de um sistema responde corretamente a diversas requisições HTTP.
 - **Tipo de Teste:** Teste de Integração.
 - **Plataforma TaaS:** O usuário integra a API com o TaaS e define os endpoints e métodos a serem testados.
 - **Resultado:** O TaaS retorna uma lista detalhada de status de resposta (200, 404, etc.), tempo de resposta, e dados retornados.
 
-#### Exemplo 2: Teste de Desempenho
+### Exemplo 2: Teste de Desempenho
 
 - **Objetivo:** Verificar a performance de uma aplicação web sob carga elevada.
 - **Tipo de Teste:** Teste de Carga.
@@ -114,7 +114,7 @@ Os preços do TaaS geralmente são baseados em fatores como:
 
 ---
 
-### 10. Conclusão
+## 10. Conclusão
 
 O Test as a Service é uma solução poderosa para empresas que buscam testar software de forma escalável, automatizada e eficiente. Ao permitir que as equipes se concentrem no desenvolvimento, sem se preocupar com a infraestrutura de testes, o TaaS oferece um caminho para garantir a qualidade do software, reduzir custos e acelerar os ciclos de lançamento.
 
@@ -122,10 +122,25 @@ Para mais informações e exemplos de como integrar o TaaS aos seus sistemas, en
 
 ---
 
-### 11. Glossário
+## 11. Glossário
 
 - **CI/CD:** Integração Contínua e Entrega Contínua, práticas de desenvolvimento que envolvem a automação dos testes e da entrega de código.
 - **JUnit:** Framework para escrever testes automatizados em Java.
 - **Selenium:** Framework para automação de testes de aplicações web.
 - **JMeter:** Ferramenta de código aberto para realizar testes de desempenho.
 - **K6:** Ferramenta de código aberto e SaaS para equipes de engenharia.
+
+## 12. FLUXOS
+
+O TaaS possui os seguintes fluxos principais:
+
+| Fluxo | Objetivo | Documento |
+|---|---|---|
+| Prepare | Preparação inicial do ambiente e geração das configurações | [prepare.md](./fluxos/prepare.md) |
+| Create | Provisionamento da infraestrutura utilizando Terraform e execução do Ansible | [create.md](./fluxos/create.md) |
+| Destroy | Remoção da infraestrutura provisionada | [destroy.md](./fluxos/destroy.md) |
+| Upload | Coleta dos resultados dos testes e envio para o Report | [upload.md](./fluxos/upload.md) |
+| Update | Atualização dos testes nos geradores de carga | [update.md](./fluxos/update.md) |
+| CMD | Execução de comandos diretamente nos geradores de carga | [cmd.md](./fluxos/cmd.md) |
+| Run | Execução das baterias de testes k6 | [run.md](./fluxos/run.md) |
+| Clean | Limpeza dos arquivos temporários e ambiente local | [clean.md](./fluxos/clean.md) |
