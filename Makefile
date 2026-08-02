@@ -1,81 +1,86 @@
-COLOR_RESET = \033[0m
-COLOR_COMMAND = \033[36m
-COLOR_YELLOW = \033[33m
-COLOR_GREEN = \033[32m
-COLOR_RED = \033[31m
-
-TEMP_FILES_REMOVE= 10.* authn-performance-tests
+SHELL := /bin/bash
 
 PROJECT := TAAS - K6
 
-setup-%:
-	cd infra/terraform && ${MAKE} terraform-plan TF_VAR_env=$*
+COLOR_RESET   := \033[0m
+COLOR_COMMAND := \033[36m
+COLOR_YELLOW  := \033[33m
+
+SCRIPT := scripts/taas.sh
+
+.PHONY: \
+	help prepare create setup run cmd update upload infracost clean destroy
 
 layout:
-	@echo "\n${COLOR_YELLOW}\n----------------------------------------------------${COLOR_RESET}"
-	@echo "\n${COLOR_YELLOW}[${PROJECT}] ${MESSAGE} ${COLOR_RESET}"
-	@echo "${COLOR_YELLOW}\n----------------------------------------------------${COLOR_RESET}"
+	@printf "\n$(COLOR_YELLOW)----------------------------------------------------$(COLOR_RESET)\n"
+	@printf "$(COLOR_YELLOW)[$(PROJECT)] %s$(COLOR_RESET)\n" "$(MESSAGE)"
+	@printf "$(COLOR_YELLOW)----------------------------------------------------$(COLOR_RESET)\n\n"
 
-## Configura o ambiente do TAAS.
+
+define run_taas
+	@$(MAKE) layout MESSAGE="$(1)"
+	@$(SHELL) $(SCRIPT) $(2)
+endef
+
+
+## Configura o ambiente local.
 prepare:
-	@${MAKE} layout MESSAGE="Configura o ambiente para execução Local"
-	@/bin/bash scripts/k6tt.sh -p
+	$(call run_taas,Configura o ambiente para execução local,-p)
 
-## Cria os ambientes para execução.
+
+## Cria a infraestrutura.
 create:
-	@${MAKE} layout MESSAGE="Cria os ambientes "
-	@/bin/bash scripts/k6tt.sh -a create
+	$(call run_taas,Cria os ambientes,-a create)
 
-## Configura os ambientes para execução.
+
+## Configura os ambientes.
 setup:
-	@${MAKE} layout MESSAGE="Configura os ambientes "
-	@/bin/bash scripts/k6tt.sh -a setup
+	$(call run_taas,Configura os ambientes,-a setup)
 
-## Executa um script de teste.
+
+## Executa os testes.
 run:
-	@${MAKE} layout MESSAGE="Configura e Executa os testes "
-	@/bin/bash scripts/k6tt.sh -a run
+	$(call run_taas,Executa os testes,-a run)
 
-## Executa um comando ad hoc.
+
+## Executa um comando remoto.
 cmd:
-	@${MAKE} layout MESSAGE="Roda Comando fornecido pelo usuario "
-	@/bin/bash scripts/k6tt.sh -a cmd
+	$(call run_taas,Executa comando remoto,-a cmd)
 
-## Atualiza as informações modificadas para preparação do ambiente.
+
+## Atualiza os arquivos do ambiente.
 update:
-	@${MAKE} layout MESSAGE="Atualiza os testes "
-	@/bin/bash scripts/k6tt.sh -a update
+	$(call run_taas,Atualiza os testes,-a update)
 
-## Realiza o upload dos resultados para o report.
+
+## Faz upload dos resultados.
 upload:
-	@${MAKE} layout MESSAGE="Realiza o upload dos resultados para o report"
-	@/bin/bash scripts/k6tt.sh -a upload
+	$(call run_taas,Upload dos resultados,-a upload)
 
-## Verifica o custo do teste.
+
+## Calcula custo da infraestrutura.
 infracost:
-	@${MAKE} layout MESSAGE="Verifica o custo do teste "
-	@/bin/bash scripts/k6tt.sh -a infracost
+	$(call run_taas,Calcula custo da infraestrutura,-a infracost)
 
-## Realiza a limpeza do ambiente local.
+
+## Limpa o ambiente local.
 clean:
-	@${MAKE} layout MESSAGE="Realiza a limpeza no ambiente Local"
-	@/bin/bash scripts/k6tt.sh -c
+	$(call run_taas,Limpeza do ambiente,-c)
 
-## Remove ambiente do TAAS.
+
+## Remove a infraestrutura.
 destroy:
-	@${MAKE} layout MESSAGE="Remove ambiente"
-	@/bin/bash scripts/k6tt.sh -a destroy
+	$(call run_taas,Remove a infraestrutura,-a destroy)
 
-## Exibe os comandos disponíveis.
+
+## Exibe esta ajuda.
 help:
-	@echo "\n${COLOR_YELLOW}\n------------\n${PROJECT}\n------------\n${COLOR_RESET}"
-	@awk '/^[a-zA-Z\-\_0-9\.%]+:/ { \
-		helpMessage = match(lastLine, /^## (.*)/); \
-		if (helpMessage) { \
-			helpCommand = substr($$1, 0, index($$1, ":")); \
-			helpMessage = substr(lastLine, RSTART + 3, RLENGTH); \
-			printf "${COLOR_COMMAND}$$ make %s${COLOR_RESET} %s\n", helpCommand, helpMessage; \
+	@printf "\n$(COLOR_YELLOW)------------\n$(PROJECT)\n------------$(COLOR_RESET)\n\n"
+	@awk '\
+		BEGIN {FS=":"} \
+		/^[a-zA-Z0-9_.%-]+:/ { \
+			if (last ~ /^## /) { \
+				printf "$(COLOR_COMMAND)%-18s$(COLOR_RESET) %s\n", $$1, substr(last,4); \
+			} \
 		} \
-	} \
-	{ lastLine = $$0 }' $(MAKEFILE_LIST) | sort
-	@printf "\n\n"
+		{ last = $$0 }' $(MAKEFILE_LIST)
