@@ -1,4 +1,3 @@
-#Limpa o ambiente.
 clean_environment(){
     if [ ! -f "$CONFIG_FILE" ]
     then

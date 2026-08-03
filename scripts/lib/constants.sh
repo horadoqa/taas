@@ -1,6 +1,6 @@
 TERRAFORM_PATH="infra/terraform"
 ANSIBLE_PATH="infra/ansible"
-CONFIG_FILE=".config.sh"
+CONFIG_FILE="$BASE_DIR/config/.config.sh"
 PROXY_GCP_SA="http://proxy-sa-e1.gcp.i.globo:3128"
 PROXY_GCP_E1="http://proxy-us-e1.gcp.i.globo:3128"
 NO_PROXY_HOSTS="localhost,127.0.0.1,10.,.globoi.com,i.s3.glbimg.com,.googleapis.com,.apps.g.globo,.apps.tsuru.dev.gcp.i.globo,.globo.com,.apps.tsuru.gcp.i.globo"

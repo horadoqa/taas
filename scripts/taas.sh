@@ -1,28 +1,35 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-BASE_DIR="$(dirname "$0")"
+# BASE_DIR="$(dirname "$0")"
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Libraries
+source "$BASE_DIR/lib/constants.sh"
+source "$BASE_DIR/lib/utils.sh"
 
 # Config
 source "$BASE_DIR/config/wizard.sh"
 source "$BASE_DIR/config/load.sh"
 source "$BASE_DIR/config/save.sh"
 
+# Providers
+source "$BASE_DIR/providers/gcp.sh"
+source "$BASE_DIR/providers/aws.sh"
+
 # Terraform
+source "$BASE_DIR/terraform/prepare.sh"
+source "$BASE_DIR/terraform/create.sh"
+source "$BASE_DIR/terraform/destroy.sh"
 source "$BASE_DIR/terraform/configure.sh"
-source "$BASE_DIR/terraform/gcp.sh"
-source "$BASE_DIR/terraform/aws.sh"
 
 # Ansible
-source "$BASE_DIR/ansible/create.sh"
 source "$BASE_DIR/ansible/setup.sh"
-source "$BASE_DIR/ansible/run.sh"
 source "$BASE_DIR/ansible/update.sh"
-source "$BASE_DIR/ansible/upload.sh"
-source "$BASE_DIR/ansible/destroy.sh"
 
 # Utils
 source "$BASE_DIR/utils/help.sh"
 source "$BASE_DIR/utils/clean.sh"
+source "$BASE_DIR/utils/infracost.sh"
 
 
 while getopts ":hpca:" option; do
@@ -37,18 +44,34 @@ while getopts ":hpca:" option; do
             ;;
 
         p)
-            configure
+            prepare
             ;;
 
         a)
+    case "$OPTARG" in
+
+        create|destroy)
+            terraform_func "$OPTARG"
+            ;;
+
+        setup|update|cmd)
             ansible_func "$OPTARG"
             ;;
 
-        *)
-            echo "Opção inválida."
-            help
-            exit 1
+        infracost)
+            terraform_cost
             ;;
 
+        *)
+            echo "Opção inválida: $OPTARG"
+            help
+            ;;
+    esac
+            ;;
+
+        *)
+            echo "Opção inválida: $option"
+            help
+            ;;
     esac
 done

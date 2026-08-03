@@ -1,5 +1,6 @@
 configure(){
-    read_config
+
+    load_config
 
     if [ "$CLOUD" = "gcp" ]
     then
@@ -8,4 +9,5 @@ configure(){
     then
         configure_aws
     fi
+
 }

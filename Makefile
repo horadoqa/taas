@@ -1,86 +1,144 @@
 SHELL := /bin/bash
 
-PROJECT := TAAS - K6
+################################################################################
+# TaaS - Testing as a Service
+# Automação de provisionamento e execução de testes k6
+################################################################################
 
-COLOR_RESET   := \033[0m
-COLOR_COMMAND := \033[36m
-COLOR_YELLOW  := \033[33m
+PROJECT := TaaS - K6
+VERSION := 2.0.0
 
 SCRIPT := scripts/taas.sh
 
-.PHONY: \
-	help prepare create setup run cmd update upload infracost clean destroy
 
-layout:
-	@printf "\n$(COLOR_YELLOW)----------------------------------------------------$(COLOR_RESET)\n"
-	@printf "$(COLOR_YELLOW)[$(PROJECT)] %s$(COLOR_RESET)\n" "$(MESSAGE)"
-	@printf "$(COLOR_YELLOW)----------------------------------------------------$(COLOR_RESET)\n\n"
+################################################################################
+# Cores
+################################################################################
+
+RESET        := \033[0m
+CYAN         := \033[36m
+YELLOW       := \033[33m
+GREEN        := \033[32m
+RED          := \033[31m
+BOLD         := \033[1m
+
+
+################################################################################
+# Targets
+################################################################################
+
+.PHONY: help \
+	prepare create setup run cmd update upload infracost clean destroy
+
+
+################################################################################
+# Helpers
+################################################################################
+
+define banner
+
+	@printf "\n"
+	@printf "$(YELLOW)====================================================$(RESET)\n"
+	@printf "$(BOLD)$(PROJECT)$(RESET)\n"
+	@printf "Versão: $(VERSION)\n"
+	@printf "$(YELLOW)====================================================$(RESET)\n"
+	@printf "$(CYAN)%s$(RESET)\n\n" "$(1)"
+
+endef
 
 
 define run_taas
-	@$(MAKE) layout MESSAGE="$(1)"
+	$(call banner,$(1))
 	@$(SHELL) $(SCRIPT) $(2)
 endef
 
 
-## Configura o ambiente local.
+################################################################################
+# Ambiente
+################################################################################
+
+## Prepara o ambiente local e gera configurações.
 prepare:
-	$(call run_taas,Configura o ambiente para execução local,-p)
+	$(call run_taas,Preparando ambiente local,-p)
 
 
-## Cria a infraestrutura.
+## Cria a infraestrutura utilizando Terraform e Ansible.
 create:
-	$(call run_taas,Cria os ambientes,-a create)
+	$(call run_taas,Criando infraestrutura,-a create)
 
 
-## Configura os ambientes.
+## Configura os servidores para execução dos testes.
 setup:
-	$(call run_taas,Configura os ambientes,-a setup)
+	$(call run_taas,Configurando ambientes,-a setup)
 
 
-## Executa os testes.
+################################################################################
+# Testes k6
+################################################################################
+
+## Executa uma bateria de testes k6.
 run:
-	$(call run_taas,Executa os testes,-a run)
+	$(call run_taas,Executando testes de performance,-a run)
 
 
-## Executa um comando remoto.
+## Executa comandos diretamente nos geradores de carga.
 cmd:
-	$(call run_taas,Executa comando remoto,-a cmd)
+	$(call run_taas,Executando comando remoto,-a cmd)
 
 
-## Atualiza os arquivos do ambiente.
+## Atualiza os testes nos geradores de carga.
 update:
-	$(call run_taas,Atualiza os testes,-a update)
+	$(call run_taas,Atualizando testes,-a update)
 
 
-## Faz upload dos resultados.
+## Envia resultados para o Report.
 upload:
-	$(call run_taas,Upload dos resultados,-a upload)
+	$(call run_taas,Enviando resultados,-a upload)
 
 
-## Calcula custo da infraestrutura.
+################################################################################
+# Infraestrutura
+################################################################################
+
+## Calcula o custo estimado da infraestrutura.
 infracost:
-	$(call run_taas,Calcula custo da infraestrutura,-a infracost)
+	$(call run_taas,Calculando custo da infraestrutura,-a infracost)
 
 
-## Limpa o ambiente local.
-clean:
-	$(call run_taas,Limpeza do ambiente,-c)
-
-
-## Remove a infraestrutura.
+## Remove a infraestrutura criada.
 destroy:
-	$(call run_taas,Remove a infraestrutura,-a destroy)
+	$(call run_taas,Removendo infraestrutura,-a destroy)
 
+
+################################################################################
+# Manutenção
+################################################################################
+
+## Remove configurações e arquivos temporários.
+clean:
+	$(call run_taas,Limpando ambiente local,-c)
+
+
+################################################################################
+# Help
+################################################################################
 
 ## Exibe esta ajuda.
 help:
-	@printf "\n$(COLOR_YELLOW)------------\n$(PROJECT)\n------------$(COLOR_RESET)\n\n"
+	@printf "\n"
+	@printf "$(YELLOW)====================================================$(RESET)\n"
+	@printf "$(BOLD)$(PROJECT) - Comandos disponíveis$(RESET)\n"
+	@printf "$(YELLOW)====================================================$(RESET)\n\n"
+
 	@awk '\
 		BEGIN {FS=":"} \
-		/^[a-zA-Z0-9_.%-]+:/ { \
-			if (last ~ /^## /) { \
-				printf "$(COLOR_COMMAND)%-18s$(COLOR_RESET) %s\n", $$1, substr(last,4); \
-			} \
-		} \
-		{ last = $$0 }' $(MAKEFILE_LIST)
+		/^##/ {desc=substr($$0,4); next} \
+		/^[a-zA-Z0-9_-]+:/ { \
+			printf "$(CYAN)%-15s$(RESET) %s\n", $$1, desc \
+		}' $(MAKEFILE_LIST)
+
+	@printf "\n"
+	@printf "$(GREEN)Exemplo:$(RESET)\n"
+	@printf "  make prepare\n"
+	@printf "  make create\n"
+	@printf "  make run\n\n"

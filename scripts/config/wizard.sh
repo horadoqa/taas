@@ -20,20 +20,6 @@ ask_config() {
             ;;
     esac
 
-    read -p "Deseja salvar as configurações (s/n): " SAVE
-
-    configArray=(
-        "CLOUD=$CLOUD"
-        "ENVIRONMENT=$ENVIRONMENT"
-        "NUMBER_INSTANCES=$NUMBER_INSTANCES"
-        "REPORT_AREA=$REPORT_AREA"
-        "REPORT_PROJECT=$REPORT_PROJECT"
-        "NETWORK_NAME=$NETWORK_NAME"
-        "REGION=$REGION"
-        "ZONE=$ZONE"
-        "MACHINE_TYPE=$MACHINE_TYPE"
-        "PROJECT_ID=$PROJECT_ID"
-    )
 }
 
 
@@ -53,12 +39,47 @@ ask_config_gcp() {
 
 
 ask_config_aws() {
+
     read -p "AWS Access Key: " AWS_ACCESS_KEY
     read -p "AWS Secret Key: " AWS_SECRET_KEY
+
     read -p "VPC: " NETWORK_NAME
     read -p "Subnet: " SUBNETWORK_NAME
-    read -p "Região: " REGION
-    read -p "Zona: " ZONE
-    read -p "Tipo da máquina: " MACHINE_TYPE
+
+    read -p "Região AWS (us-east-1): " REGION
+
+    read -p "Zona AWS (opcional): " ZONE
+
+    read -p "Tipo da máquina (t3.micro): " MACHINE_TYPE
     read -p "Projeto: " PROJECT_ID
+}
+
+ask_machine_type_aws(){
+
+    echo "Tipos disponíveis:"
+    echo "1) t4g.nano  - menor custo (ARM)"
+    echo "2) t3.nano   - menor custo x86"
+    echo "3) t4g.micro - recomendado"
+    echo "4) t3.micro  - recomendado x86"
+
+    read -p "Escolha o tipo da máquina: " MACHINE_OPTION
+
+    case "$MACHINE_OPTION" in
+        1)
+            MACHINE_TYPE="t4g.nano"
+            ;;
+        2)
+            MACHINE_TYPE="t3.nano"
+            ;;
+        3)
+            MACHINE_TYPE="t4g.micro"
+            ;;
+        4)
+            MACHINE_TYPE="t3.micro"
+            ;;
+        *)
+            echo "Opção inválida"
+            exit 1
+            ;;
+    esac
 }

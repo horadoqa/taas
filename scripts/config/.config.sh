@@ -1,23 +1,22 @@
-export CLOUD=
-export ENVIRONMENT=
-export NUMBER_INSTANCES=
+export CLOUD=aws
+export ENVIRONMENT=prod
+export NUMBER_INSTANCES=2
 export REPORT_AREA=
 export REPORT_PROJECT=
+
 export NETWORK_NAME=
 export NETWORK_PROJECT_ID=
 export SUBNETWORK_NAME=
 export EXTERNAL_NETWORK=
 export PROVISIONING_MODEL=
+
 export REGION=
 export ZONE=
-export MACHINE_TYPE=
-export PROJECT_ID=
-export MANAGED_ZONE=
+export MACHINE_TYPE=t3.micro
+export PROJECT_ID=glive
+
 export SERVICE_ACCOUNT=
 export GCP_SERVICE_ACCOUNT_FILE=
+
 export AWS_ACCESS_KEY=
 export AWS_SECRET_KEY=
-export ANSIBLE_USER=
-export K6_REPO_TEST=
-export K6_REPO_BRANCH=
-export K6_SOURCE_DIR=
