@@ -114,23 +114,7 @@ Os preços do TaaS geralmente são baseados em fatores como:
 
 ---
 
-## 10. Conclusão
-
-O Test as a Service é uma solução poderosa para empresas que buscam testar software de forma escalável, automatizada e eficiente. Ao permitir que as equipes se concentrem no desenvolvimento, sem se preocupar com a infraestrutura de testes, o TaaS oferece um caminho para garantir a qualidade do software, reduzir custos e acelerar os ciclos de lançamento.
-
-Para mais informações e exemplos de como integrar o TaaS aos seus sistemas, entre em contato com a plataforma ou acesse a documentação oficial.
-
----
-
-## 11. Glossário
-
-- **CI/CD:** Integração Contínua e Entrega Contínua, práticas de desenvolvimento que envolvem a automação dos testes e da entrega de código.
-- **JUnit:** Framework para escrever testes automatizados em Java.
-- **Selenium:** Framework para automação de testes de aplicações web.
-- **JMeter:** Ferramenta de código aberto para realizar testes de desempenho.
-- **K6:** Ferramenta de código aberto e SaaS para equipes de engenharia.
-
-## 12. FLUXOS
+## 10. FLUXOS
 
 O TaaS possui os seguintes fluxos principais:
 
@@ -144,3 +128,22 @@ O TaaS possui os seguintes fluxos principais:
 | CMD | Execução de comandos diretamente nos geradores de carga | [cmd.md](./fluxos/cmd.md) |
 | Run | Execução das baterias de testes k6 | [run.md](./fluxos/run.md) |
 | Clean | Limpeza dos arquivos temporários e ambiente local | [clean.md](./fluxos/clean.md) |
+
+---
+
+
+## 11. Glossário
+
+- **CI/CD:** Integração Contínua e Entrega Contínua, práticas de desenvolvimento que envolvem a automação dos testes e da entrega de código.
+- **JUnit:** Framework para escrever testes automatizados em Java.
+- **Selenium:** Framework para automação de testes de aplicações web.
+- **JMeter:** Ferramenta de código aberto para realizar testes de desempenho.
+- **K6:** Ferramenta de código aberto e SaaS para equipes de engenharia.
+
+## 12. Conclusão
+
+O Test as a Service é uma solução poderosa para empresas que buscam testar software de forma escalável, automatizada e eficiente. Ao permitir que as equipes se concentrem no desenvolvimento, sem se preocupar com a infraestrutura de testes, o TaaS oferece um caminho para garantir a qualidade do software, reduzir custos e acelerar os ciclos de lançamento.
+
+Para mais informações e exemplos de como integrar o TaaS aos seus sistemas, entre em contato com a plataforma ou acesse a documentação oficial.
+
+---
